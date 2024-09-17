@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev:1": "nodemon app.js",
+    "dev:1": "node --watch app.js",
     "dev:2": "nodemon routing.js",
     "dev:3": "node --watch express.js"  
   },

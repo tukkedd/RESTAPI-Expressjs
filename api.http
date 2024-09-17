@@ -2,7 +2,23 @@
 GET http://localhost:1234/movies
 
 ### Recuperar una pelicula por id
-GET http://localhost:1234/movies/1
+GET http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
 
 ##Recuperar todas las peliculas por genero
-GET http://localhost:1234/movies?genre=Terror
+GET http://localhost:1234/movies?genre=Action
+
+### Crear una pelicula
+POST http://localhost:1234/movies
+Content-Type: application/json
+
+{
+    "title": "The Pew Knight",
+    "year": 2008,
+    "director": "Christopher Nolan",
+    "duration": 152,
+    "poster": "https://i.ebayimg.com/images/g/yokAAOSw8w1YARbm/s-l1200.jpg",
+    "genre": [
+      "Crime",
+      "Drama"
+    ]
+  },
