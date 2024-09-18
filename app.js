@@ -2,6 +2,7 @@ const express = require('express')
 const movies = require('./movies.json')
 const crypto = require('node:crypto')
 
+const { validateMovie } = require('./schemas/movies')
 
 const app = express()
 app.use(express.json())
@@ -27,31 +28,24 @@ app.get('/movies/:id', (req, res) => {
 })
 
 app.post('/movies', (req, res) => {
-    const {
-        title,
-        genre,
-        year,
-        director,
-        duration,
-        rate,
-        poster
-    } = req.body
+  const result = validateMovie(req.body)
 
-    const newMovie = {
-        id: crypto.randomUUID(), // uuid v4
-        title,
-        genre,
-        year,
-        director,
-        duration,
-        rate: rate ?? 0,
-        poster
-    }
+  if (!result.success) {
+    // 422 Unprocessable Entity
+    return res.status(400).json({ error: JSON.parse(result.error.message) })
+  }
 
-    //esto no es REST, porque estoy guardando el estado de la aplicacion en memoria
-    movies.push(newMovie)
+  // en base de datos
+  const newMovie = {
+    id: crypto.randomUUID(), // uuid v4
+    ...result.data
+  }
 
-    res.status(201) //actualizar la ache del cliente al mandar el newMovie
+  // Esto no sería REST, porque estamos guardando
+  // el estado de la aplicación en memoria
+  movies.push(newMovie)
+
+  res.status(201).json(newMovie)
 })
 
 const PORT = process.env.PORT ?? 1234
