@@ -32,7 +32,7 @@ app.get('/movies', (req, res) => {
   // const origin = req.header('origin')
 
   // if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-  //   res.header('Access-Controll-allow-Origin', origin)
+  //   res.header('Access-Control-allow-Origin', origin)
   // }
 
   const { genre } = req.query
@@ -75,7 +75,7 @@ app.post('/movies', (req, res) => {
   res.status(201).json(newMovie)
 })
 
-
+//
 app.patch('/movies/:id', (req, res) => {
 
   const result = validatePartialMovie(req.body)
